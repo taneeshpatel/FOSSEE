@@ -239,9 +239,6 @@ The project includes `sample_data.csv` in the root directory for testing.
 | Desktop UI | PyQt5, Matplotlib |
 | Security | Django Auth, Token Authentication |
 
-## License
-
-This project is released under MIT License terms.
 
 ---
 
