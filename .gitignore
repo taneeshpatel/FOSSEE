@@ -1,0 +1,17 @@
+venv/
+env/
+.env
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+db.sqlite3
+*.sqlite3
+node_modules/
+build/
+dist/
+*.egg-info/
+.eggs/
+*.log
+.DS_Store

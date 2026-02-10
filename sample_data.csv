@@ -1,0 +1,9 @@
+Equipment Name,Type,Flowrate,Pressure,Temperature
+Pump-A1,Pump,45.5,12.3,78.9
+Valve-B2,Valve,30.2,8.7,55.4
+Heater-C3,Heater,60.0,15.1,92.3
+Pump-D4,Pump,42.1,11.8,76.5
+Valve-E5,Valve,28.9,9.2,58.1
+Compressor-F6,Compressor,55.3,14.0,88.7
+Pump-G7,Pump,47.8,13.1,80.2
+Heater-H8,Heater,58.6,14.9,90.1
