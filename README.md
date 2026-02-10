@@ -1,199 +1,177 @@
 # Chemical Equipment Parameter Visualizer
 
-A full-stack application for analyzing and visualizing chemical equipment parameters from CSV files. Upload equipment data and get instant statistical summaries, interactive charts, and downloadable PDF reports.
+Transform raw equipment measurement data into actionable insights through automated analysis and visual reporting.
 
-## What This Project Does
+## What You Can Do
 
-- Upload CSV files with chemical equipment data (Equipment Name, Type, Flowrate, Pressure, Temperature)
-- Automatically compute statistical summaries (total count, averages per type)
-- Generate 4 interactive visualizations (count by type, distribution pie chart, avg temperature/pressure by type)
-- Download comprehensive PDF reports
-- Store and retrieve last 5 uploaded datasets
-- Access via web browser or desktop application
-- Secure user authentication and session management
+This system processes CSV files containing equipment performance metrics and delivers comprehensive analytics. Input your data files with equipment identifiers, type classifications, flowrate values, pressure measurements, and temperature readings—the platform handles the rest.
 
-## How It's Built
+The application automatically calculates aggregate statistics: total equipment inventory, mean flowrate across all units, average pressure and temperature readings, plus distribution breakdowns by equipment category. Visual analytics include four distinct chart formats showing count distributions, percentage allocations, and type-specific temperature and pressure averages.
 
-**Backend:**
-- Django 4.2+ with Django REST Framework
-- Pandas for CSV parsing and analytics
-- SQLite database (stores last 5 datasets)
-- ReportLab for PDF generation
-- Token + Session authentication
+Your workspace maintains the five most current datasets with instant reload capability. Each analysis can be exported as a formatted PDF document. Access the platform through your web browser or via a dedicated desktop client—both connect to a unified backend API with protected user sessions.
 
-**Web Frontend:**
-- React.js 18+
-- Chart.js for interactive visualizations
-- Axios with CSRF token handling
+## Technology Foundation
 
-**Desktop App:**
-- PyQt5 for cross-platform GUI
-- Matplotlib for charts
-- Token-based API authentication
+**Server Components:**
+The backend runs on Django framework (4.2+) with REST capabilities via Django REST Framework. CSV processing and numerical operations utilize the Pandas library. SQLite handles data persistence with automated cleanup keeping only your latest five uploads. ReportLab library generates PDF reports. Authentication supports both session-based (for browsers) and token-based (for desktop) authorization.
 
-## Project Structure
+**Web Client:**
+Frontend built on React.js (version 18+). Chart.js library powers the visual analytics. HTTP requests flow through Axios with integrated CSRF token management for security.
+
+**Desktop Client:**
+GUI constructed with PyQt5 for multi-platform support (Windows/Mac/Linux). Matplotlib generates statistical charts. API communication uses token authentication headers.
+
+## File Organization
 
 ```
 chemical-equipment-visualizer/
-├── backend/                          # Django REST API
-│   ├── config/                       # Django settings, URLs, WSGI
-│   ├── equipment/                    # Main app
-│   │   ├── models.py                 # UploadedDataset, DataSummary models
-│   │   ├── serializers.py            # DRF serializers
-│   │   ├── views.py                  # API endpoints
-│   │   ├── utils.py                  # parse_csv, compute_summary, generate_pdf
-│   │   └── migrations/               # Database migrations
+├── backend/                          Server API implementation
+│   ├── config/                       Django configuration layer
+│   ├── equipment/                    Core application module
+│   │   ├── models.py                 Data schemas (UploadedDataset, DataSummary)
+│   │   ├── serializers.py            JSON conversion handlers
+│   │   ├── views.py                  HTTP endpoint logic
+│   │   ├── utils.py                  CSV parser, analytics engine, PDF generator
+│   │   └── migrations/               Database version control
 │   ├── manage.py
 │   └── requirements.txt
 │
-├── frontend/                         # React web app
+├── frontend/                         Browser-based interface
 │   ├── src/
-│   │   ├── App.js                    # Main component with auth state
+│   │   ├── App.js                    Primary component with auth logic
 │   │   ├── api/
-│   │   │   └── axios.js              # Axios instance with CSRF
+│   │   │   └── axios.js              HTTP client configuration
 │   │   └── components/
-│   │       ├── Login.js              # Login form
-│   │       ├── Register.js           # Registration form
-│   │       ├── Upload.js             # CSV upload interface
-│   │       ├── DataTable.js          # Equipment data table
-│   │       ├── Summary.js            # Stats cards + PDF download
-│   │       ├── Charts.js             # Bar and pie charts
-│   │       └── History.js            # Last 5 datasets
+│   │       ├── Login.js              Authentication screen
+│   │       ├── Register.js           New account creation
+│   │       ├── Upload.js             File upload handler
+│   │       ├── DataTable.js          Grid data viewer
+│   │       ├── Summary.js            Metrics panel with PDF export
+│   │       ├── Charts.js             Visual analytics display
+│   │       └── History.js            Previous uploads list
 │   ├── package.json
 │   └── public/
 │
-├── desktop/                          # PyQt5 desktop app
-│   ├── main.py                       # Entry point
+├── desktop/                          Standalone application
+│   ├── main.py                       Program entry point
 │   ├── api/
-│   │   └── client.py                 # API client with token auth
+│   │   └── client.py                 Backend connector (token auth)
 │   └── ui/
-│       ├── login_window.py           # Login window
-│       ├── main_window.py            # Main tabbed window
-│       ├── upload_tab.py             # Upload & summary tab
-│       ├── chart_tab.py              # Charts tab (Matplotlib)
-│       └── history_tab.py            # Dataset history tab
+│       ├── login_window.py           Login dialog
+│       ├── main_window.py            Main interface shell
+│       ├── upload_tab.py             Upload and statistics panel
+│       ├── chart_tab.py              Visualization workspace
+│       └── history_tab.py            Dataset history viewer
 │
-├── sample_data.csv                   # Sample CSV for testing
+├── sample_data.csv                   Example dataset
 ├── .gitignore
 └── README.md
 ```
 
-## Prerequisites
+## Required Software
 
-- Python 3.10+
-- Node.js 18+
-- npm
+Your development environment needs:
+- Python 3.10 or later
+- Node.js 18 or later  
+- npm (Node package manager)
 
-## Installation & Setup
+## Getting Started
 
-### 1. Backend (Django)
+### Backend Setup
 
 ```bash
-# Navigate to backend directory
+# Navigate into backend folder
 cd chemical-equipment-visualizer/backend
 
-# Create virtual environment
+# Initialize Python virtual environment
 python -m venv venv
 
-# Activate virtual environment
-# Windows:
+# Activate the environment
+# For Windows users:
 venv\Scripts\activate
-# Mac/Linux:
+# For Mac/Linux users:
 source venv/bin/activate
 
-# Install dependencies
+# Install Python dependencies
 pip install -r requirements.txt
 
-# Run migrations
+# Initialize database schema
 python manage.py migrate
 
-# Start Django server
+# Launch development server
 python manage.py runserver
 ```
 
-Backend runs at **http://localhost:8000**
+Server will listen on **http://localhost:8000**
 
-### 2. Web App (React)
+### Web Interface Setup
 
 ```bash
-# Open new terminal
+# Open a second terminal
 cd chemical-equipment-visualizer/frontend
 
-# Install dependencies
+# Install Node.js packages
 npm install
 
-# Start development server
+# Start React development server
 npm start
 ```
 
-Web app opens at **http://localhost:3000**
+Browser will open **http://localhost:3000** automatically
 
-### 3. Desktop App (PyQt5)
+### Desktop Application Setup
 
 ```bash
-# Navigate to desktop directory
+# Navigate to desktop folder
 cd chemical-equipment-visualizer/desktop
 
-# Install dependencies (use same venv as backend)
+# Install PyQt5 and dependencies (use backend's venv)
 pip install -r requirements.txt
 
-# Run application
+# Launch the application
 python main.py
 ```
 
-**Note:** Ensure Django backend is running before starting web or desktop app.
+**Critical:** The Django backend must be running before launching either frontend.
 
-## How to Use
+## Operating Instructions
 
-### Web Application
+### Using the Web Interface
 
-1. **Register/Login**
-   - Navigate to http://localhost:3000
-   - Click "Register" to create account or login with existing credentials
+**Initial Access:**
+Visit http://localhost:3000 in your browser. Create a new account via the Register button or sign in with existing credentials.
 
-2. **Upload CSV**
-   - Click "Select CSV File" button
-   - Choose your CSV file
-   - Click "Submit"
+**Data Upload Workflow:**
+1. Click the "Select CSV File" button
+2. Choose your data file from disk
+3. Press "Submit" to process
 
-3. **View Results**
-   - Summary statistics appear automatically
-   - Scroll down to see data table
-   - View 4 interactive charts (count by type, share by type, avg temperature/pressure)
+**Reviewing Results:**
+Statistics appear immediately after processing. Scroll through the page to view the equipment data grid, then examine four visualization panels showing equipment counts, distribution percentages, and average metrics by category.
 
-4. **Download PDF Report**
-   - Click "Download PDF Report" button in Summary section
+**Exporting Reports:**
+Locate the "Download PDF Report" button in the statistics section to save a formatted document.
 
-5. **Load Previous Datasets**
-   - Navigate to History section
-   - Click "Load" on any of the last 5 datasets
+**Accessing Historical Data:**
+The History panel shows your five latest uploads. Click "Load" next to any entry to restore that analysis.
 
-### Desktop Application
+### Using the Desktop Application
 
-1. **Login**
-   - Enter username and password
-   - Click "Login"
+**Authentication:**
+Launch the program, enter your username and password, then click Login.
 
-2. **Upload & View Summary** (Tab 1)
-   - Click "Select CSV File"
-   - Click "Upload"
-   - View statistics (Total Count, Avg Flowrate, Avg Pressure, Avg Temperature)
-   - Click "Download PDF" to save report
+**Upload and Analysis (First Tab):**
+Select "Select CSV File" to choose your data, then "Upload" to process it. View calculated metrics including Total Count, Average Flowrate, Average Pressure, and Average Temperature. Use "Download PDF" to export the report to your chosen location.
 
-3. **View Charts** (Tab 2)
-   - See 4 Matplotlib visualizations
-   - Count by type (bar chart)
-   - Share by type (pie chart)
-   - Avg temperature by type (bar chart)
-   - Avg pressure by type (bar chart)
+**Visualizations (Second Tab):**
+Switch to the Charts tab for four Matplotlib graphs: equipment count by type, distribution pie chart, average temperature by type, and average pressure by type.
 
-4. **Browse History** (Tab 3)
-   - View last 5 uploaded datasets
-   - Double-click any dataset to load it
+**Dataset Archive (Third Tab):**
+Browse your five most recent uploads. Double-click any row to load that dataset.
 
-## CSV File Format
+## Data File Format
 
-Your CSV file must contain these exact columns:
+Your CSV must include these exact column headers:
 
 ```csv
 Equipment Name,Type,Flowrate,Pressure,Temperature
@@ -204,67 +182,67 @@ Pump-A2,Pump,145.8,2.1,74.5
 Valve-B3,Valve,92.1,1.9,69.2
 ```
 
-**Requirements:**
-- All 5 columns must be present
-- Column names are case-sensitive
-- Empty rows are automatically removed
-- Numeric values must be valid floats
+**Format Rules:**
+- All five columns must exist
+- Column names are case-sensitive (exact match required)
+- Blank rows get automatically removed
+- Numeric columns must contain valid decimal numbers
 
-A sample CSV file (`sample_data.csv`) is included in the project root for testing.
+The project includes `sample_data.csv` in the root directory for testing.
 
-## API Endpoints
+## API Reference
 
-Base URL: `http://localhost:8000/api`
+**Base endpoint:** `http://localhost:8000/api`
 
-| Endpoint | Method | Description | Auth |
-|----------|--------|-------------|------|
-| `/auth/register/` | POST | Register new user | No |
-| `/auth/login/` | POST | Login (returns session + token) | No |
-| `/auth/logout/` | POST | Logout user | Yes |
-| `/upload/` | POST | Upload CSV file | Yes |
-| `/datasets/` | GET | Get last 5 datasets | Yes |
-| `/datasets/<id>/` | GET | Get specific dataset with raw data | Yes |
-| `/summary/<id>/` | GET | Get statistical summary | Yes |
-| `/pdf/<id>/` | GET | Download PDF report | Yes |
+| Route | HTTP Method | Purpose | Requires Auth |
+|-------|-------------|---------|---------------|
+| `/auth/register/` | POST | Create new user account | No |
+| `/auth/login/` | POST | Authenticate user (returns session + token) | No |
+| `/auth/logout/` | POST | End user session | Yes |
+| `/upload/` | POST | Process CSV file | Yes |
+| `/datasets/` | GET | Retrieve five most recent datasets | Yes |
+| `/datasets/<id>/` | GET | Fetch specific dataset with raw records | Yes |
+| `/summary/<id>/` | GET | Retrieve calculated statistics | Yes |
+| `/pdf/<id>/` | GET | Export PDF report | Yes |
 
-## Features
+## Capability Summary
 
-✅ **CSV Upload** - Upload equipment parameter data  
-✅ **Auto Analysis** - Compute total count, averages, type distribution  
-✅ **Type-Based Stats** - Per-equipment-type analytics  
-✅ **Interactive Charts** - 4 visualizations (web: Chart.js, desktop: Matplotlib)  
-✅ **PDF Reports** - Generate and download comprehensive reports  
-✅ **History** - Store and retrieve last 5 datasets  
-✅ **Dual Interface** - Web browser and desktop application  
-✅ **Authentication** - Secure user login/registration  
+🔹 **Data Ingestion** - Process equipment measurement CSV files  
+🔹 **Automated Analytics** - Calculate totals, averages, categorical distributions  
+🔹 **Category Breakdown** - Per-equipment-type statistical analysis  
+🔹 **Visual Intelligence** - Four chart types (web: Chart.js | desktop: Matplotlib)  
+🔹 **Document Export** - PDF report generation and download  
+🔹 **Session History** - Automatic storage of five latest datasets  
+🔹 **Dual Access** - Browser and desktop application interfaces  
+🔹 **User Management** - Secure registration and authentication  
 
-## Common Issues
+## Troubleshooting Guide
 
-| Problem | Solution |
-|---------|----------|
-| **Django not found** | Activate virtual environment first |
-| **CORS errors** | Verify `CORS_ALLOWED_ORIGINS` includes `http://localhost:3000` |
-| **Desktop can't connect** | Ensure Django backend is running on port 8000 |
-| **CSV validation fails** | Check all 5 columns are present with exact names |
-| **Charts not showing** | Reload dataset from History tab to regenerate stats |
-| **Port already in use** | Stop existing process or use different port |
+| Symptom | Resolution |
+|---------|-----------|
+| **"Django module not found" error** | Activate Python virtual environment first |
+| **CORS policy violation in browser** | Verify Django settings include `http://localhost:3000` in CORS_ALLOWED_ORIGINS |
+| **Desktop client connection failure** | Confirm Django server is active on port 8000 |
+| **CSV file rejected** | Verify presence of all five required columns with exact names |
+| **Missing chart visualizations** | Reload the dataset from History to regenerate statistics |
+| **Port conflict** | Terminate existing process or specify alternate port |
 
-## Tech Stack Summary
+## Technology Stack
 
-| Component | Technology |
-|-----------|-----------|
-| Backend API | Django, Django REST Framework |
-| Data Processing | Pandas |
-| Database | SQLite |
-| PDF Generation | ReportLab |
-| Web Frontend | React.js, Chart.js, Axios |
-| Desktop Frontend | PyQt5, Matplotlib |
-| Authentication | Django Auth + Token Auth |
+| Layer | Implementation |
+|-------|----------------|
+| API Server | Django, Django REST Framework |
+| Data Engine | Pandas |
+| Storage | SQLite |
+| Document Generation | ReportLab |
+| Web UI | React.js, Chart.js, Axios |
+| Desktop UI | PyQt5, Matplotlib |
+| Security | Django Auth, Token Authentication |
 
 ## License
 
-MIT License
+This project is released under MIT License terms.
 
 ---
 
-**Made with Python, React, and PyQt5**
+**Built with Django • React • PyQt5**
